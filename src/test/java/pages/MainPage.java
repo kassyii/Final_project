@@ -63,4 +63,19 @@ public class MainPage {
 
         updatedCard.shouldHave(Condition.text(expectedPrice));
     }
+
+    // Добавьте этот метод в MainPage.java для клика по самому объявлению
+    public void clickListingByTitle(String title) {
+        $$("div[class*='card'], div[class*='item']")
+                .findBy(Condition.text(title))
+                .shouldBe(visible)
+                .click();
+    }
+
+    // Добавьте метод проверки отсутствия объявления в результатах поиска
+    public void checkListingIsNotFound(String title) {
+        $$("div[class*='card'], div[class*='item']")
+                .findBy(Condition.text(title))
+                .shouldNotBe(visible);
+    }
 }

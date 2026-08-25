@@ -19,6 +19,7 @@
         <junit-jupiter.version>5.10.1</junit-jupiter.version>
         <junit-platform.version>1.10.1</junit-platform.version>
         <allure.version>2.24.0</allure.version>
+        <aspectj.version>1.9.20.1</aspectj.version>
         <jackson.version>2.15.3</jackson.version>
     </properties>
 
@@ -84,6 +85,14 @@
             <artifactId>allure-cucumber7-jvm</artifactId>
             <version>${allure.version}</version>
         </dependency>
+
+        <!-- webdrivermanager -->
+        <dependency>
+            <groupId>io.github.bonigarcia</groupId>
+            <artifactId>webdrivermanager</artifactId>
+            <version>5.9.2</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
     <build>
@@ -98,16 +107,39 @@
                 </configuration>
             </plugin>
 
+            <!-- Surefire Plugin c настройкой AspectJ и кодировки UTF-8 -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>3.2.2</version>
                 <configuration>
+                    <argLine>
+                        -Dfile.encoding=UTF-8
+                        -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
+                    </argLine>
                     <properties>
                         <configurationParameters>
                             cucumber.junit-platform.engine.stacktrace.max-depth=20
                         </configurationParameters>
                     </properties>
+                </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.aspectj</groupId>
+                        <artifactId>aspectjweaver</artifactId>
+                        <version>${aspectj.version}</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
+
+            <!-- Плагин Allure Maven для поддержки команды allure:serve -->
+            <plugin>
+                <groupId>io.qameta.allure</groupId>
+                <artifactId>allure-maven</artifactId>
+                <version>2.12.0</version>
+                <configuration>
+                    <reportVersion>${allure.version}</reportVersion>
+                    <resultsDirectory>${project.build.directory}/allure-results</resultsDirectory>
                 </configuration>
             </plugin>
         </plugins>

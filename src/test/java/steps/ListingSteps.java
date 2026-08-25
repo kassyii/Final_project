@@ -6,6 +6,7 @@ import data.DataGenerator;
 import io.cucumber.java.ru.*;
 import pages.AuthModal;
 import pages.CreateListingPage;
+import pages.ListingPage;
 import pages.MainPage;
 import io.restassured.response.Response;
 
@@ -105,5 +106,35 @@ public class ListingSteps {
 
         Response deleteResponse = listingApiClient.deleteListingById(listingId, token);
         deleteResponse.then().statusCode(200);
+    }
+
+    // Объявляем страницу просмотра объявления
+    private final ListingPage listingPage = new ListingPage();
+
+    @И("Переходит в карточку найденного объявления")
+    public void openListingDetails() {
+        mainPage.clickListingByTitle(createdListingTitle);
+    }
+
+    @Тогда("Кнопка {string} отображается на странице")
+    public void verifyButtonVisible(String buttonName) {
+        listingPage.checkDeleteButtonIsVisible();
+    }
+
+    @Когда("Пользователь нажимает кнопку \"Удалить\"")
+    public void clickDeleteButton() {
+        listingPage.clickDeleteButton();
+    }
+
+    @Тогда("Пользователь перенаправлен на главную страницу")
+    public void verifyRedirectToMainPage() {
+        // Проверяем, что URL соответствует главной странице
+        com.codeborne.selenide.WebDriverRunner.url().equals("https://qa-desk.education-services.ru/");
+    }
+
+    @И("Созданное объявление отсутствует в поиске")
+    public void checkListingNotFoundInSearch() {
+        mainPage.searchListing(createdListingTitle);
+        mainPage.checkListingIsNotFound(createdListingTitle);
     }
 }

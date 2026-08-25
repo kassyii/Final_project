@@ -3,6 +3,7 @@ package steps;
 import com.codeborne.selenide.Selenide;
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
+import io.github.bonigarcia.wdm.WebDriverManager;
 import pages.MainPage;
 
 public class Hooks {
@@ -11,6 +12,7 @@ public class Hooks {
 
     @Before
     public void setUp() {
+        WebDriverManager.chromedriver().setup();
         mainPage.openMainPage();
     }
 

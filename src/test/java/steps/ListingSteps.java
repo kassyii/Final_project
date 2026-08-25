@@ -108,7 +108,6 @@ public class ListingSteps {
         deleteResponse.then().statusCode(200);
     }
 
-    // Объявляем страницу просмотра объявления
     private final ListingPage listingPage = new ListingPage();
 
     @И("Переходит в карточку найденного объявления")
@@ -128,7 +127,6 @@ public class ListingSteps {
 
     @Тогда("Пользователь перенаправлен на главную страницу")
     public void verifyRedirectToMainPage() {
-        // Проверяем, что URL соответствует главной странице
         com.codeborne.selenide.WebDriverRunner.url().equals("https://qa-desk.education-services.ru/");
     }
 

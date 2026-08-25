@@ -8,7 +8,6 @@ import static com.codeborne.selenide.Selenide.$;
 
 public class ListingPage {
 
-    // Кнопка "Удалить" на странице объявления
     private final SelenideElement deleteButton = $(byText("Удалить"));
 
     public void checkDeleteButtonIsVisible() {

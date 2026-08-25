@@ -4,8 +4,6 @@ import io.restassured.config.EncoderConfig;
 import io.restassured.config.RestAssuredConfig;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
-
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -15,9 +13,7 @@ public class ListingApiClient {
 
     private static final String BASE_URL = "https://qa-desk.education-services.ru";
     private static final String LISTINGS_ENDPOINT = "/api/listings/";
-    private static final String DELETE_LISTING_ENDPOINT = "/api/listings/";
 
-    // Находим ID объявления по названию
     public int getListingIdByName(String title) {
         int currentPage = 1;
         int totalPages = 1;
@@ -32,7 +28,6 @@ public class ListingApiClient {
 
             response.then().statusCode(200);
 
-            // Обновляем общее количество страниц
             Integer pagesFromApi = response.jsonPath().get("totalPages");
             if (pagesFromApi != null) {
                 totalPages = pagesFromApi;
@@ -54,7 +49,6 @@ public class ListingApiClient {
         throw new RuntimeException("Объявление с названием '" + title + "' не найдено ни на одной из " + totalPages + " страниц API.");
     }
 
-    // Удаляем объявление по ID с токеном Authorization: Bearer <token>
     public Response deleteListingById(int listingId, String token) {
         return given()
                 .baseUri(BASE_URL)
@@ -66,22 +60,6 @@ public class ListingApiClient {
     }
 
     public Response createListingViaApi(String name, int price, String condition, String token) {
-//        return given()
-//                .baseUri(BASE_URL)
-//                .header("Authorization", "Bearer " + token)
-//                .contentType("multipart/form-data")
-//                .multiPart("name", name)
-//                .multiPart("category", "Авто")
-//                .multiPart("condition", condition)
-//                .multiPart("city", "Москва")
-//                .multiPart("description", "Тестовое описание")
-//                .multiPart("price", String.valueOf(price))
-//                .when()
-//                .post("/api/create-listing/")
-//                .then()
-//                .log().all() // <--- Выведет полные данные созданного объекта из базы
-//                .extract().response();
-
         return given()
                 .config(RestAssuredConfig.config().encoderConfig(
                         EncoderConfig.encoderConfig().defaultContentCharset("UTF-8")

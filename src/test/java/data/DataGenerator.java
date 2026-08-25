@@ -7,7 +7,7 @@ public class DataGenerator {
     private static final Random RANDOM = new Random();
 
     public static String getRandomEmail() {
-        return "user_test" + RANDOM.nextInt(1000) + "@yandex.ru";
+        return "user_tests" + RANDOM.nextInt(1000) + "@yandex.ru";
     }
 
     public static String getRandomPassword() {

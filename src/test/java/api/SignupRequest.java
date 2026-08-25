@@ -6,9 +6,6 @@ public class SignupRequest {
     private String password;
     private String submitPassword;
 
-    public SignupRequest() {
-    }
-
     public SignupRequest(String email, String password, String submitPassword) {
         this.email = email;
         this.password = password;

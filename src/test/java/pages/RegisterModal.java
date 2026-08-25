@@ -4,7 +4,6 @@ import com.codeborne.selenide.SelenideElement;
 
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Condition.visible;
-import static com.codeborne.selenide.Selectors.byAttribute;
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.$;
 
@@ -14,8 +13,6 @@ public class RegisterModal {
     private final SelenideElement passwordInput = $("input[name='password']");
     private final SelenideElement submitPasswordInput = $("input[name='submitPassword']");
     private final SelenideElement createAccountButton = $(byText("Создать аккаунт"));
-    //private final SelenideElement errorMessage = $(".error-message, .alert-danger, [class*='error']");
-    // Локатор текста ошибки под полем ввода
     private final SelenideElement errorMessage = $("[class*='input_span']");
 
     public void fillRegistrationForm(String email, String password) {
@@ -37,7 +34,6 @@ public class RegisterModal {
         errorMessage.shouldBe(visible).shouldHave(text(text));
     }
 
-    // Метод проверки появления ошибки "Ошибка"
     public void checkErrorMessageIsDisplayed() {
         errorMessage.shouldBe(visible).shouldHave(text("Ошибка"));
     }

@@ -18,7 +18,6 @@ public class AuthSteps {
     private static String userEmail;
     private static String userPassword;
 
-//    private static UserApiClient userApiClient = new UserApiClient();
 
     @Дано("Пользователь зарегистрирован в системе через API")
     public void registerUserViaApi() {

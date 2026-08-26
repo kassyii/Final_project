@@ -58,22 +58,4 @@ public class ListingApiClient {
                 .when()
                 .delete(LISTINGS_ENDPOINT + listingId);
     }
-
-    public Response createListingViaApi(String name, int price, String condition, String token) {
-        return given()
-                .config(RestAssuredConfig.config().encoderConfig(
-                        EncoderConfig.encoderConfig().defaultContentCharset("UTF-8")
-                ))
-                .baseUri(BASE_URL)
-                .header("Authorization", "Bearer " + token)
-                .contentType("multipart/form-data; charset=UTF-8")
-                .multiPart("name", name)
-                .multiPart("category", "Авто")
-                .multiPart("condition", condition)
-                .multiPart("city", "Москва")
-                .multiPart("description", "Тестовое описание")
-                .multiPart("price", String.valueOf(price))
-                .when()
-                .post("/api/create-listing/");
-    }
 }
